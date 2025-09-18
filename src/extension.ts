@@ -1,10 +1,10 @@
-import { explicitFoldingExtensionId, ExplicitFoldingHub } from '@zokugun/vscode.explicit-folding-api';
+import { explicitFoldingExtensionId } from '@zokugun/vscode.explicit-folding-api';
 import * as vscode from 'vscode';
 import pkg from '../package.json';
 
 const VERSION_KEY = 'version';
 
-let $foldingHub: ExplicitFoldingHub | undefined;
+let $foldingHub: any;
 
 async function showWhatsNewMessage(version: string) { // {{{
 	const actions: vscode.MessageItem[] = [{
@@ -35,7 +35,7 @@ async function showWhatsNewMessage(version: string) { // {{{
 } // }}}
 
 function setup() { // {{{
-	const explicitFoldingExtension = vscode.extensions.getExtension<ExplicitFoldingHub>(explicitFoldingExtensionId);
+	const explicitFoldingExtension = vscode.extensions.getExtension<any>(explicitFoldingExtensionId);
 
 	$foldingHub = explicitFoldingExtension?.exports;
 

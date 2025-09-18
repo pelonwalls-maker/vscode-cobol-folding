@@ -20,12 +20,14 @@
 
 		/* Module Resolution Options */
 		"resolveJsonModule": true,
+		"esModuleInterop": true
 	},
 	"exclude": [
 		"node_modules",
 		".vscode-test"
 	],
-	"files": [
-		"package.json",
-	],
+	"include": [
+		"src/**/*",
+		"package.json"
+	]
 }
