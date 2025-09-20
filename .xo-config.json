@@ -1,6 +1,10 @@
 {
 	"ignores": [
-		"*.config.js"
+		"*.config.js",
+		"out/",
+		"lib/",
+		"src/extension.js",
+		"src/extension.d.ts"
 	],
 	"rules": {
 		"@typescript-eslint/ban-types": "off",
