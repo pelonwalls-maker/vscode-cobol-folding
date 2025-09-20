@@ -9,13 +9,13 @@
     },
     "publisher": "JefeAguila",
     "license": "MIT",
-    "homepage": "https://dev.azure.com/senorparedes/vscode-cobol-folding",
+    "homepage": "https://github.com/pelonwalls-maker/vscode-cobol-folding",
     "repository": {
         "type": "git",
-        "url": "https://dev.azure.com/senorparedes/vscode-cobol-folding/_git/vscode-cobol-folding"
+        "url": "https://github.com/pelonwalls-maker/vscode-cobol-folding"
     },
     "bugs": {
-        "url": "https://dev.azure.com/senorparedes/vscode-cobol-folding/_workitems"
+        "url": "https://github.com/pelonwalls-maker/vscode-cobol-folding/issues"
     },
     "engines": {
         "vscode": "^1.85.0"

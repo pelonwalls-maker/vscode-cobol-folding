@@ -1,0 +1,14 @@
+{
+  "publisher": "JefeAguila",
+  "name": "Jorge Francisco Paredes Soria",
+  "description": "Open-source developer focused on COBOL tooling and TypeScript extensions.",
+  "logo": "logo.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pelonwalls-maker/vscode-cobol-folding"
+  },
+  "support": "https://github.com/pelonwalls-maker/vscode-cobol-folding/issues",
+  "website": "https://github.com/pelonwalls-maker",
+  "twitter": "https://twitter.com/JefeAguila",
+  "linkedin": "https://www.linkedin.com/in/jorgefranciscoparedessoria"
+}
