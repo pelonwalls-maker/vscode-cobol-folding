@@ -1,0 +1,89 @@
+IDENTIFICATION DIVISION.
+       PROGRAM-ID. TEST-PROGRAM.
+       AUTHOR. TEST-AUTHOR.
+       DATE-WRITTEN. 01/01/2024.
+       DATE-COMPILED. 01/01/2024.
+       SECURITY. CONFIDENTIAL.
+
+       ENVIRONMENT DIVISION.
+       CONFIGURATION SECTION.
+       SOURCE-COMPUTER. IBM-PC.
+       OBJECT-COMPUTER. IBM-PC.
+       INPUT-OUTPUT SECTION.
+       FILE-CONTROL.
+           SELECT INPUT-FILE ASSIGN TO "input.dat"
+               ORGANIZATION IS LINE SEQUENTIAL.
+           SELECT OUTPUT-FILE ASSIGN TO "output.dat"
+               ORGANIZATION IS LINE SEQUENTIAL.
+
+       DATA DIVISION.
+       FILE SECTION.
+       FD INPUT-FILE.
+       01 INPUT-RECORD.
+           05 INPUT-NAME PIC X(30).
+           05 INPUT-AGE PIC 9(3).
+           05 INPUT-CITY PIC X(20).
+
+       FD OUTPUT-FILE.
+       01 OUTPUT-RECORD.
+           05 OUTPUT-NAME PIC X(30).
+           05 OUTPUT-AGE PIC 9(3).
+           05 OUTPUT-CITY PIC X(20).
+
+       WORKING-STORAGE SECTION.
+       01 WS-COUNTERS.
+           05 WS-RECORD-COUNT PIC 9(5) VALUE ZERO.
+           05 WS-ERROR-COUNT PIC 9(3) VALUE ZERO.
+
+       01 WS-FLAGS.
+           05 WS-EOF-FLAG PIC X VALUE 'N'.
+               88 EOF-YES VALUE 'Y'.
+               88 EOF-NO VALUE 'N'.
+           05 WS-VALID-RECORD PIC X VALUE 'Y'.
+               88 VALID-RECORD VALUE 'Y'.
+               88 INVALID-RECORD VALUE 'N'.
+
+       PROCEDURE DIVISION.
+       MAIN-PROCEDURE.
+           PERFORM INITIALIZATION
+           PERFORM PROCESS-RECORDS UNTIL EOF-YES
+           PERFORM TERMINATION
+           STOP RUN.
+
+       INITIALIZATION.
+           OPEN INPUT INPUT-FILE
+           OPEN OUTPUT OUTPUT-FILE
+           INITIALIZE WS-COUNTERS.
+
+       PROCESS-RECORDS.
+           READ INPUT-FILE
+               AT END
+                   SET EOF-YES TO TRUE
+               NOT AT END
+                   PERFORM VALIDATE-RECORD
+                   IF VALID-RECORD
+                       PERFORM PROCESS-RECORD
+                       ADD 1 TO WS-RECORD-COUNT
+                   ELSE
+                       ADD 1 TO WS-ERROR-COUNT
+                   END-IF
+           END-READ.
+
+       VALIDATE-RECORD.
+           IF INPUT-NAME = SPACES
+               SET INVALID-RECORD TO TRUE
+           ELSE
+               SET VALID-RECORD TO TRUE
+           END-IF.
+
+       PROCESS-RECORD.
+           MOVE INPUT-NAME TO OUTPUT-NAME
+           MOVE INPUT-AGE TO OUTPUT-AGE
+           MOVE INPUT-CITY TO OUTPUT-CITY
+           WRITE OUTPUT-RECORD.
+
+       TERMINATION.
+           CLOSE INPUT-FILE
+           CLOSE OUTPUT-FILE
+           DISPLAY "RECORDS PROCESSED: " WS-RECORD-COUNT
+           DISPLAY "ERRORS FOUND: " WS-ERROR-COUNT.
