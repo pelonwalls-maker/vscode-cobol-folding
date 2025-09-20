@@ -1,18 +1,31 @@
-# TODO: Fix COBOL Folding Extension Conflict
+# VS Code Extension Publisher & Azure DevOps Setup
 
-## Tasks
-- [x] Update package.json: Remove extensionDependencies and @zokugun/vscode.explicit-folding-api dependency; update engines, @types/vscode, TypeScript, and other devDependencies to latest versions.
-- [x] Refactor src/extension.ts: Remove explicit-folding imports; implement FoldingRangeProvider class with regex-based folding logic; register provider in activate; handle config and disposal.
-- [x] Run npm update to update dependencies.
-- [x] Compile the extension (npm run compile).
-- [x] Bundle the extension (npm run bundle).
-- [x] Test the extension in VSCode to verify folding works and conflict is resolved.
-- [x] Address npm audit vulnerabilities if possible. (10 vulnerabilities remain in dev dependencies - commitizen, lint-staged, xo - but production audit is clean: 0 vulnerabilities)
+## Current Issues to Fix:
+1. **Publisher Mismatch**: package.json shows "zokugun" but publisher.json shows "JefeAguila"
+2. **Repository URLs**: Currently point to GitHub instead of Azure DevOps
+3. **Author Information**: Needs to be updated to reflect current ownership
 
-## ✅ COMPLETED
-The COBOL folding extension has been successfully refactored and is ready for publishing:
-- ✅ Core functionality working (regex-based folding)
-- ✅ No production vulnerabilities (npm audit --omit=dev shows 0 vulnerabilities)
-- ✅ Extension builds successfully
-- ✅ Extension bundles successfully
-- ✅ Ready for VSIX packaging and marketplace submission
+## Plan:
+
+### Phase 1: Fix Publisher Configuration ✅ COMPLETED
+- [x] Update package.json publisher from "zokugun" to "JefeAguila"
+- [x] Update author information in package.json
+- [x] Update repository URLs to point to Azure DevOps
+- [x] Update homepage and bugs URLs
+- [x] Update publisher.json sourceCodeRepository URL
+
+### Phase 2: Azure DevOps Integration
+- [ ] Create Azure DevOps project at https://dev.azure.com/senorparedes/
+- [ ] Set up Git repository
+- [ ] Configure CI/CD pipelines for extension builds
+- [ ] Set up artifact storage for .vsix packages
+
+### Phase 3: Publishing Setup
+- [ ] Register "JefeAguila" as publisher with Microsoft
+- [x] Test extension packaging ✅ SUCCESSFUL
+- [ ] Set up automated publishing workflow
+
+## Files Updated:
+- ✅ package.json (publisher, author, repository URLs)
+- ✅ publisher.json (sourceCodeRepository URL)
+- ⏳ README.md (if needed for new repository links)
