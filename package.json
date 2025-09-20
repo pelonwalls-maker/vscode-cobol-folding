@@ -2,7 +2,7 @@
     "name": "cobol-folding",
     "displayName": "COBOL Folding",
     "description": "Add foldings to COBOL files",
-    "version": "0.3.0",
+    "version": "0.3.1",
     "author": {
         "name": "Jorge Francisco Paredes Soria",
         "email": "pelonwalls@gmail.com"
