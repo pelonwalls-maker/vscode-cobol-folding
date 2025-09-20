@@ -37,27 +37,28 @@ export function activate(context: vscode.ExtensionContext) { // {{{
 	const provider: vscode.FoldingRangeProvider = {
 		provideFoldingRanges(document, context, token) {
 			const ranges: vscode.FoldingRange[] = [];
-			const regex = /^\s*(?:IF|PERFORM|EVALUATE|SECTION|DIVISION)/i;
+			const regex = /^\s*(?:if|perform|evaluate|section|division)/i;
 
-			for (let line = 0; line < document.lineCount; line++) {
+			for(let line = 0; line < document.lineCount; line++) {
 				const lineText = document.lineAt(line).text;
-				if (regex.test(lineText)) {
+				if(regex.test(lineText)) {
 					let endLine = line + 1;
-					while (endLine < document.lineCount && !/^\s*END-/.test(document.lineAt(endLine).text)) {
+					while(endLine < document.lineCount && !/^\s*END-/.test(document.lineAt(endLine).text)) {
 						endLine++;
 					}
-					if (endLine < document.lineCount) {
+
+					if(endLine < document.lineCount) {
 						ranges.push(new vscode.FoldingRange(line, endLine));
 					}
 				}
 			}
 
 			return ranges;
-		}
+		},
 	};
 
 	context.subscriptions.push(
-		vscode.languages.registerFoldingRangeProvider({ language: 'cobol' }, provider)
+		vscode.languages.registerFoldingRangeProvider({ language: 'cobol' }, provider),
 	);
 
 	// Handle version notifications
@@ -90,4 +91,7 @@ export function activate(context: vscode.ExtensionContext) { // {{{
 	}
 } // }}}
 
-export function deactivate() {}
+export function deactivate() {
+	// This method is called when the extension is deactivated
+	// No cleanup is needed for this extension
+}
