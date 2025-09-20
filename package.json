@@ -18,7 +18,7 @@
 		"url": "https://github.com/zokugun/vscode-cobol-folding/issues"
 	},
 	"engines": {
-		"vscode": "^1.74.0"
+		"vscode": "^1.85.0"
 	},
 	"main": "./lib/index.js",
 	"browser": "./lib/index.js",
@@ -38,13 +38,13 @@
 		"@commitlint/config-conventional": "^17.0.3",
 		"@types/node": "^18.0.0",
 		"@types/vscode": "^1.74.0",
-		"commitizen": "^4.2.5",
+		"commitizen": "^4.3.1",
 		"fixpack": "^4.0.0",
 		"husky": "^8.0.1",
 		"lint-staged": "^13.0.3",
 		"path-browserify": "^1.0.1",
 		"process": "^0.11.10",
-		"release-it": "^15.3.0",
+		"release-it": "^19.0.5",
 		"tsc-watch": "^6.0.0",
 		"typescript": "^5.0.0",
 		"webpack": "^5.80.0",
@@ -90,8 +90,5 @@
 	"extensionKind": [
 		"ui",
 		"workspace"
-	],
-	"dependencies": {
-		"@zokugun/vscode.explicit-folding-api": "^0.2.1"
-	}
+	]
 }

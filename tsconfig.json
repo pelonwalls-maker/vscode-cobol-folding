@@ -1,15 +1,13 @@
 {
 	"compilerOptions": {
 		"module": "commonjs",
-		"target": "es6",
-		/* Basic Options */
-		"outDir": ".",
+		"target": "es2020",
+		"outDir": "out",
 		"lib": [
-			"es6",
-			"es2017"
+			"es2020"
 		],
 		"sourceMap": false,
-		"rootDir": ".",
+		"rootDir": "src",
 		"strictNullChecks": true,
 		"noImplicitAny": true,
 		"noImplicitReturns": true,
@@ -17,17 +15,15 @@
 		"strict": true,
 		"alwaysStrict": true,
 		"composite": true,
-
-		/* Module Resolution Options */
+		"skipLibCheck": true,
 		"resolveJsonModule": true,
 		"esModuleInterop": true
 	},
+	"include": [
+		"src/**/*.ts"
+	],
 	"exclude": [
 		"node_modules",
-		".vscode-test"
-	],
-	"include": [
-		"src/**/*",
-		"package.json"
+		"out"
 	]
 }
