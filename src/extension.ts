@@ -1,10 +1,7 @@
-import { explicitFoldingExtensionId, ExplicitFoldingHub } from '@zokugun/vscode.explicit-folding-api';
 import * as vscode from 'vscode';
 import pkg from '../package.json';
 
 const VERSION_KEY = 'version';
-
-let $foldingHub: ExplicitFoldingHub | undefined;
 
 async function showWhatsNewMessage(version: string) { // {{{
 	const actions: vscode.MessageItem[] = [{
@@ -34,60 +31,37 @@ async function showWhatsNewMessage(version: string) { // {{{
 	}
 } // }}}
 
-function setup() { // {{{
-	const explicitFoldingExtension = vscode.extensions.getExtension<ExplicitFoldingHub>(explicitFoldingExtensionId);
+export function activate(context: vscode.ExtensionContext) { // {{{
+	console.log(`${pkg.name} is now active! - extension.ts:35`);
 
-	$foldingHub = explicitFoldingExtension?.exports;
+	const provider: vscode.FoldingRangeProvider = {
+		provideFoldingRanges(document, context, token) {
+			const ranges: vscode.FoldingRange[] = [];
+			const regex = /^\s*(?:if|perform|evaluate|section|division)/i;
 
-	if($foldingHub) {
-		const config = vscode.workspace.getConfiguration('cobolFolding');
+			for(let line = 0; line < document.lineCount; line++) {
+				const lineText = document.lineAt(line).text;
+				if(regex.test(lineText)) {
+					let endLine = line + 1;
+					while(endLine < document.lineCount && !/^\s*END-/.test(document.lineAt(endLine).text)) {
+						endLine++;
+					}
 
-		const enabled = config.get<boolean>('enabled');
+					if(endLine < document.lineCount) {
+						ranges.push(new vscode.FoldingRange(line, endLine));
+					}
+				}
+			}
 
-		if(enabled) {
-			$foldingHub.registerFoldingRules('cobol', [
-				// Comments block
-				{
-					name: 'comment',
-					whileRegex: '^.{6}\\*',
-					kind: 'comment',
-				},
-				// Division
-				{
-					name: 'division',
-					separatorRegex: '^.{6} {1,4}[A-Za-z0-9\\-_:]+ +(?i:DIVISION)',
-					strict: 'never',
-					nested: [
-						// Section
-						{
-							name: 'section',
-							separatorRegex: '^.{6} {1,4}[A-Za-z0-9\\-_:]+ +(?i:SECTION)',
-							nested: [
-								// Paragraph
-								{
-									name: 'paragraph',
-									separatorRegex: '^.{6} {1,4}[A-Za-z0-9\\-_:]+(?! +(?i:SECTION|DIVISION))',
-									nested: [
-										// Page eject
-										{
-											name: 'eject',
-											separatorRegex: '^.{6}\\/',
-										},
-									],
-								},
-							],
-						},
-					],
-				},
-			]);
-		}
-		else {
-			$foldingHub.unregisterFoldingRules('cobol');
-		}
-	}
-} // }}}
+			return ranges;
+		},
+	};
 
-export async function activate(context: vscode.ExtensionContext) { // {{{
+	context.subscriptions.push(
+		vscode.languages.registerFoldingRangeProvider({ language: 'cobol' }, provider),
+	);
+
+	// Handle version notifications
 	const previousVersion = context.globalState.get<string>(VERSION_KEY);
 	const currentVersion = pkg.version;
 
@@ -115,18 +89,9 @@ export async function activate(context: vscode.ExtensionContext) { // {{{
 			void showWhatsNewMessage(currentVersion);
 		}
 	}
-
-	setup();
-
-	vscode.workspace.onDidChangeConfiguration((event) => {
-		if(event.affectsConfiguration('cobolFolding')) {
-			setup();
-		}
-	});
 } // }}}
 
-export function deactivate(): void { // {{{
-	if($foldingHub) {
-		$foldingHub.unregisterFoldingRules('cobol');
-	}
-} // }}}
+export function deactivate() {
+	// This method is called when the extension is deactivated
+	// No cleanup is needed for this extension
+}
